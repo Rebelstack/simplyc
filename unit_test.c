@@ -39,8 +39,12 @@ static char error_msg[MAX_MSG_LEN + 1];
 //! s:   format string                           \n
 //! e:   expected value                          \n
 //! a:   actual value                            \n
+#ifdef UNIT_TEST_LOG
 #define EQ_ERR_MSG_CREATE(msg, s, e, a) \
     (void) snprintf(msg, MAX_MSG_LEN, s, e, a)
+#else
+#define EQ_ERR_MSG_CREATE(msg, s, e, a) ((void) 0)
+#endif
     
 //! Macro to allow creation of assertion failure messages when a value is equal
 //! to something that is not expected. By default, this uses snprintf. Change
@@ -49,8 +53,12 @@ static char error_msg[MAX_MSG_LEN + 1];
 //! msg: char buffer used to hold the message
 //! s:   format string                           \n
 //! e:   value that is not expected              \n
+#ifdef UNIT_TEST_LOG
 #define NOT_EQ_ERR_MSG_CREATE(msg, s, e) \
     (void) snprintf(msg, MAX_MSG_LEN, s, e)
+#else
+#define NOT_EQ_ERR_MSG_CREATE(msg, s, e) ((void) 0)
+#endif
 
 //! true   if a test suite is currently executing
 //! false  if a test suite is currently NOT executing
