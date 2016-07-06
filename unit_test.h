@@ -5,19 +5,25 @@
  * SimplyC is a unit test framework optimized for running unit tests in
  * an embedded environment. Often these environments have limited memory
  * and little support for standard I/O functions. This framework can be
- * tailored to accommodate these environments. The code has been developed 
- * using the Embedded C Coding Standard (Barr Group), linted using PC-Lint 
- * (Gimpel Software), analyzed for code quality using Resource Standard Metrics
- * (M Squared Technologies) and documented using Doxygen formatting 
- * (Dimitri van Heesch).
+ * tailored to accommodate these environments. 
  * 
- * This framework is built around the idea of test suites, test cases and
- * assertions. In general, a test suite can be viewed as testing a single
- * C source file. A test suite contains multiple test cases. Each test case
- * can be viewed as testing an individual C function. Within each test case,
- * assertions are used to compare expected results to actual results. The
- * output of the unit tests is recorded to standard out and to a log file
- * which can be analyzed after the unit tests are executed.
+ * Your test framework should not be the source of problems in your testing
+ * environment. To this end, the development of the SimplyC framework 
+ * followed basic, good development practices:
+ * - Embedded C Coding Standard was followed (Barr Group)
+ * - lint analysis was performed using PC-Lint (Gimpel Software)
+ * - cyclomatic complexity and code quality metrics were performed using 
+ *   Resource Standard Metrics (M Squared Technologies)
+ *
+ *    ### Overview
+ * 
+ *    This framework is built around the idea of test suites, test cases and
+ *    assertions. In general, a test suite can be viewed as testing a single
+ *    C source file. A test suite contains multiple test cases. Each test case
+ *    can be viewed as testing an individual C function. Within each test case,
+ *    assertions are used to compare expected results to actual results. The
+ *    output of the unit tests is recorded to standard out and to a log file
+ *    which can be analyzed after the unit tests are executed.
  *
  *    ### Example
  *
@@ -118,6 +124,18 @@
  *    - Only one test case is executed at a time.
  *
  *    ### System Requirements
+ * 
+ *    It is assumed that the development environment being used provides
+ *    fixed-width data types and a boolean data type via the following
+ *    files:
+ * 
+ *    - stdint.h
+ *    - stdbool.h
+ * 
+ *    If these files are not included in your development environment, it is
+ *    a good idea to create your own. Determine the width of the integer types
+ *    supported by your processor/compiler and create typedefs for each using
+ *    the names introduced by the C99 Standard.
  * 
  *    It is assumed that the following library functions are provided by the
  *    the environment. If these are not available, the logging functions can be

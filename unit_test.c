@@ -12,7 +12,6 @@
  */
 #include <stdbool.h>       // allow the use of boolean data type
 #include <stdint.h>        // standard fixed-width data types
-#include <string.h>        // memset function
 #include "unit_test.h"     // common declarations for the unit test project
 
 #ifdef UNIT_TEST_FLOATING_POINT
@@ -110,7 +109,10 @@ void test_suite_start (char const *test_suite_name)
         test_suite_active = true;
 
         // clear the error message buffer
-        (void) memset(error_msg, 0, sizeof(error_msg));
+        for(uint16_t index = 0; index < sizeof(error_msg); index++)
+        {
+            error_msg[index] = 0;
+        }
     }
     else
     {
