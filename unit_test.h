@@ -186,12 +186,13 @@ extern "C" {
 /**
  * Declarations for unit test framework functions.
  */
-extern void unit_test_log_on (char const *);
-extern void unit_test_log_off(void);
-extern void test_suite_start (char const *);
-extern void test_suite_end   (void);
-extern void test_case_start  (char const *);
-extern void test_case_end    (void);
+extern void unit_test_log_on     (char const *);
+extern void unit_test_log_off    (void);
+extern bool unit_test_all_success(void);
+extern void test_suite_start     (char const *);
+extern void test_suite_end       (void);
+extern void test_case_start      (char const *);
+extern void test_case_end        (void);
 
 /**
  * Use these asserts to verify test results. Call the assert functions directly

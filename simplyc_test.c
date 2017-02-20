@@ -51,6 +51,10 @@ void simplyc_test (void)
     // call all the unit test assertion functions and verify they work
     // as expected
     test_unit_test();
+    
+    // call the function that allows applications to determine if there
+    // is any failed assert during a run
+    (void) unit_test_all_success();
 
     // clean up and turn logging off
     unit_test_log_off();

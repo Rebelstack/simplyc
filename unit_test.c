@@ -71,6 +71,9 @@ static bool test_case_active = false;
 //! false  if at least one test case assertion failed
 static bool current_test_case_pass = true;
 
+//! if any asserts fail during a run, this is set to true
+static bool failed_assert = false;
+
 // static function declarations
 static void log_msg(char const *);
 static void log_msg_num(char const *, uint16_t const);
@@ -201,6 +204,14 @@ void test_case_end (void)
 }
 
 /**
+ * @return true if all tests have passed in a run, false otherwise.
+ */
+bool unit_test_all_success (void)
+{
+    return failed_assert;
+}
+
+/**
  *  Asserts if the bool values ARE NOT equal.
  *
  *  @param expected   the expected value
@@ -271,7 +282,7 @@ void assert_int8_eq (int8_t expected, int8_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_int8_not_eq(int8_t expected, int8_t actual,
+void assert_int8_not_eq (int8_t expected, int8_t actual,
         char const *file, int line_num)
 {
     if (expected == actual)
@@ -291,7 +302,7 @@ void assert_int8_not_eq(int8_t expected, int8_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_uint8_eq(uint8_t expected, uint8_t actual,
+void assert_uint8_eq (uint8_t expected, uint8_t actual,
         char const *file, int line_num)
 {
     if (expected != actual)
@@ -312,7 +323,7 @@ void assert_uint8_eq(uint8_t expected, uint8_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_uint8_not_eq(uint8_t expected, uint8_t actual,
+void assert_uint8_not_eq (uint8_t expected, uint8_t actual,
         char const *file, int line_num)
 {
     if (expected == actual)
@@ -332,7 +343,7 @@ void assert_uint8_not_eq(uint8_t expected, uint8_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_int16_eq(int16_t expected, int16_t actual,
+void assert_int16_eq (int16_t expected, int16_t actual,
         char const *file, int line_num)
 {
     if (expected != actual)
@@ -353,7 +364,7 @@ void assert_int16_eq(int16_t expected, int16_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_int16_not_eq(int16_t expected, int16_t actual,
+void assert_int16_not_eq (int16_t expected, int16_t actual,
         char const *file, int line_num)
 {
     if (expected == actual)
@@ -373,7 +384,7 @@ void assert_int16_not_eq(int16_t expected, int16_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_uint16_eq(uint16_t expected, uint16_t actual,
+void assert_uint16_eq (uint16_t expected, uint16_t actual,
         char const *file, int line_num)
 {
     if (expected != actual)
@@ -394,7 +405,7 @@ void assert_uint16_eq(uint16_t expected, uint16_t actual,
  *  @param file       the source file name
  *  @param line_num   the source code line number
  */
-void assert_uint16_not_eq(uint16_t expected, uint16_t actual,
+void assert_uint16_not_eq (uint16_t expected, uint16_t actual,
         char const *file, int line_num)
 {
     if (expected == actual)
@@ -718,6 +729,9 @@ void unit_test_log_on (char const *file_name)
     if (file_name)
     {
         log_file = fopen(file_name, "w");
+        
+        // track whether there are any failed asserts during the run
+        failed_assert = false;
     }
     #endif
 }
@@ -752,6 +766,9 @@ static void assert_failed (char const *file, int line_num, char const *msg)
 
     // the current test case has failed
     current_test_case_pass = false;
+    
+    // if any unit test case fails during a run, this is set to true
+    failed_assert = true;
 }
 
 /**
