@@ -208,7 +208,7 @@ void test_case_end (void)
  */
 bool unit_test_all_success (void)
 {
-    return failed_assert;
+    return !failed_assert;
 }
 
 /**
